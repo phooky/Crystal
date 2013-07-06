@@ -38,20 +38,18 @@ def makeDepths(X,Y,dn,df):
             points.append((x,y,d))
     return points
 
-def render(path,X,Y):
+
+if __name__ == '__main__':
+    X,Y = 1024, 600
     ds = makeDepths(X,Y,0,256)
-    for i in range(0,256,16):
+    for i in range(0,256,32):
         im = Image.new("L",(X,Y),'black')
         pix = im.load()
-        l,h = i,i+16
+        l,h = i,i+32
         for (x,y,d) in ds:
             if d < h and d >= l:
                 pix[x,y] = 256
-        if path:
-            im.save(path)
-        else:
-            im.show()
+        im.show()
 
-render(None,1024,600)
 
     
