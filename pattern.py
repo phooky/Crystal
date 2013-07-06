@@ -14,7 +14,7 @@ def bit_reverse(n,bits):
         n >>= 1
     return out
 
-def makeOrderMap(n):
+def make_order_map(n):
     "Create a decent non-sequential permutation"
     # first create an ordering over the full bit width
     bits = int(ceil(log(n,2)))
@@ -25,12 +25,12 @@ def makeOrderMap(n):
         map[bit_reverse(i,bits)] = i
     return filter(lambda x:x>=0, map)
 
-def makeDepths(X,Y,dn,df):
+def make_depths(X,Y,dn,df):
     dd = float(df-dn)
     t = float(X*Y)
     points = []
-    mx = makeOrderMap(X)
-    my = makeOrderMap(Y)
+    mx = make_order_map(X)
+    my = make_order_map(Y)
     for x in range(X):
         for y in range(Y):
             order = mx[(x+my[my[y]])%X]*Y+my[my[y]]
@@ -41,7 +41,7 @@ def makeDepths(X,Y,dn,df):
 
 if __name__ == '__main__':
     X,Y = 1024, 600
-    ds = makeDepths(X,Y,0,256)
+    ds = make_depths(X,Y,0,256)
     for i in range(0,256,32):
         im = Image.new("L",(X,Y),'black')
         pix = im.load()
