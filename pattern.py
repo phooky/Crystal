@@ -33,20 +33,25 @@ def makeDepths(X,Y,dn,df):
     my = makeOrderMap(Y)
     for x in range(X):
         for y in range(Y):
-            order = mx[(x+my[my[y]])%X]*Y+my[y]
+            order = mx[(x+my[my[y]])%X]*Y+my[my[y]]
             d = ((order/t)*dd)+dn
             points.append((x,y,d))
     return points
 
 def render(path,X,Y):
-    im = Image.new("L",(X,Y),'white')
-    pix = im.load()
     ds = makeDepths(X,Y,0,256)
-    for (x,y,d) in ds:
-        pix[x,y] = int(d)
-    im.save(path)
+    for i in range(0,256,16):
+        im = Image.new("L",(X,Y),'black')
+        pix = im.load()
+        l,h = i,i+16
+        for (x,y,d) in ds:
+            if d < h and d >= l:
+                pix[x,y] = 256
+        if path:
+            im.save(path)
+        else:
+            im.show()
 
-render('foo.png',1024,600)
-
+render(None,1024,600)
 
     
